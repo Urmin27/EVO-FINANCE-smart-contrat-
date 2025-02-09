@@ -3,88 +3,193 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minage Automatique</title>
+  <title>Minage Automatique - Trading</title>
+  <!-- Importation d'une police moderne depuis Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; }
-    .button {
-      padding: 10px 20px;
-      cursor: pointer;
-      background-color: blue;
-      color: white;
-      border: none;
-      border-radius: 5px;
+    /* Global Styles */
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      overflow-x: hidden;
     }
-    .notification { color: green; margin-top: 10px; }
-    table { border-collapse: collapse; width: 100%; }
-    table, th, td { border: 1px solid black; }
-    th, td { padding: 8px; text-align: center; }
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 700;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+    /* Header image */
+    .header-img {
+      display: block;
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      animation: fadeIn 2s ease-in-out;
+      border-bottom: 5px solid #fff;
+    }
+    /* Navigation buttons */
+    #nav-buttons {
+      text-align: center;
+      margin: 20px 0;
+    }
+    #nav-buttons .button {
+      background-color: #ff9800;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 25px;
+      font-weight: 700;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+    #nav-buttons .button:hover {
+      transform: scale(1.1);
+      background-color: #e68900;
+    }
+    /* Sections */
+    #mining-section, #transactions-section {
+      background: rgba(255,255,255,0.1);
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 800px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      animation: slideIn 1s ease-out;
+    }
+    /* Titres */
+    h3 {
+      margin-top: 20px;
+      font-weight: 700;
+    }
+    /* Boutons généraux */
+    .button {
+      background-color: #4caf50;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 700;
+      transition: background-color 0.3s, transform 0.3s;
+      cursor: pointer;
+      margin: 5px 0;
+    }
+    .button:hover {
+      background-color: #43a047;
+      transform: translateY(-3px);
+    }
+    /* Champs de formulaire */
+    input[type="number"], input[type="text"], select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+    }
+    /* Tableau */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.2);
+      margin-top: 20px;
+      animation: fadeIn 1s ease-in;
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    th {
+      background-color: rgba(0,0,0,0.3);
+      font-weight: 700;
+    }
+    /* Notification */
+    #notification {
+      text-align: center;
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
   </style>
 </head>
 <body>
+  <!-- Header image avec thème trading -->
+  <img class="header-img" src="https://via.placeholder.com/1200x300.png?text=Trading+Dashboard" alt="Trading Image">
+  
   <h1>Minage Automatique</h1>
+  
+  <!-- Boutons de navigation -->
+  <div id="nav-buttons">
+    <button id="show-mining" class="button">Minage</button>
+    <button id="show-transactions" class="button">Transactions</button>
+  </div>
   
   <!-- Section Minage -->
   <div id="mining-section">
     <p>Solde actuel : <span id="balance">0</span> USDT</p>
     <p>Gains : <span id="solde-gains">0</span> USDT</p>
     <button id="start-mining" class="button">Commencer à travailler</button>
-    <!-- Affichage du statut du contrat -->
     <p id="contract-status"></p>
   </div>
   
-  <hr>
-  
-  <!-- Section Dépôt -->
-  <h3>Dépôt</h3>
-  <button id="depot-btn" class="button">Faire un dépôt</button>
-  <div id="depot-form" style="display: none;">
-    <label for="montant-depot">Montant du dépôt (USDT):</label>
-    <input type="number" id="montant-depot" required>
-    <br>
-    <label for="adresse-depot">Adresse du dépôt:</label>
-    <select id="adresse-depot">
-      <option value="adresse1">Adresse 1</option>
-      <option value="adresse2">Adresse 2</option>
-    </select>
-    <br>
-    <button id="valider-depot" class="button">Valider le dépôt</button>
-  </div>
-  
-  <hr>
-  
-  <!-- Section Retrait -->
-  <h3>Retrait</h3>
-  <button id="retrait-btn" class="button">Faire un retrait</button>
-  <div id="retrait-form" style="display: none;">
-    <label for="montant-retrait">Montant à retirer:</label>
-    <input type="number" id="montant-retrait" required>
-    <br>
-    <label for="adresse-retrait">Adresse du retrait:</label>
-    <input type="text" id="adresse-retrait" required>
-    <br>
-    <button id="valider-retrait" class="button">Valider le retrait</button>
-  </div>
-  
-  <hr>
-  
   <!-- Section Transactions -->
-  <h3>Transactions</h3>
-  <button id="show-transactions-btn" class="button">Voir les transactions</button>
-  <div id="transactions-table" style="display: none;">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Type</th>
-          <th>Montant</th>
-          <th>Adresse</th>
-          <th>Date</th>
-          <th>Statut</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="transactions-list"></tbody>
-    </table>
+  <div id="transactions-section" style="display: none;">
+    <!-- Formulaire Dépôt -->
+    <h3>Dépôt</h3>
+    <button id="depot-btn" class="button">Faire un dépôt</button>
+    <div id="depot-form" style="display: none;">
+      <label for="montant-depot">Montant du dépôt (USDT):</label>
+      <input type="number" id="montant-depot" required>
+      <label for="adresse-depot">Adresse du dépôt:</label>
+      <select id="adresse-depot">
+        <option value="adresse1">Adresse 1</option>
+        <option value="adresse2">Adresse 2</option>
+      </select>
+      <button id="valider-depot" class="button">Valider le dépôt</button>
+    </div>
+  
+    <!-- Formulaire Retrait -->
+    <h3>Retrait</h3>
+    <button id="retrait-btn" class="button">Faire un retrait</button>
+    <div id="retrait-form" style="display: none;">
+      <label for="montant-retrait">Montant à retirer:</label>
+      <input type="number" id="montant-retrait" required>
+      <label for="adresse-retrait">Adresse du retrait:</label>
+      <input type="text" id="adresse-retrait" required>
+      <button id="valider-retrait" class="button">Valider le retrait</button>
+    </div>
+  
+    <!-- Tableau des Transactions -->
+    <h3>Transactions</h3>
+    <button id="show-transactions-btn" class="button">Voir les transactions</button>
+    <div id="transactions-table" style="display: none;">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Montant</th>
+            <th>Adresse</th>
+            <th>Date</th>
+            <th>Statut</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="transactions-list"></tbody>
+      </table>
+    </div>
   </div>
   
   <div id="notification" class="notification"></div>
@@ -93,8 +198,6 @@
     /**************************************
      * INITIALISATION DES VARIABLES
      **************************************/
-    // Pour conserver les données même après fermeture/reouverture du navigateur,
-    // nous utilisons localStorage.
     if(getLocalStorage("balance") === null) { setLocalStorage("balance", 0); }
     if(getLocalStorage("soldeGains") === null) { setLocalStorage("soldeGains", 0); }
     if(getLocalStorage("transactions") === null) { setLocalStorage("transactions", []); }
@@ -170,7 +273,6 @@
       }
     }
   
-    // Ajoute une transaction tout en évitant les doublons en attente
     function addTransaction(type, montant, adresse) {
       let transactions = getLocalStorage("transactions", []);
       const duplicate = transactions.find(tx => tx.type === type && tx.statut === "En attente");
@@ -192,7 +294,6 @@
       return transaction.id;
     }
   
-    // Lors de la confirmation d'une transaction, si c'est un dépôt, on ajoute le montant au balance.
     function confirmTransaction(transactionId) {
       let transactions = getLocalStorage("transactions", []);
       const tx = transactions.find(tx => tx.id === transactionId);
@@ -207,7 +308,6 @@
         if (tx.type === "Retrait") {
           let soldeGains = getLocalStorage("soldeGains", 0);
           let fraisRetrait = tx.montant * 0.01; // 1% de frais
-          // Désormais, on déduit directement le montant demandé du solde gains.
           if (soldeGains >= tx.montant) {
             soldeGains -= tx.montant;
             setLocalStorage("soldeGains", soldeGains);
@@ -233,7 +333,6 @@
       }
     }
   
-    // Affichage des transactions avec une colonne Date
     function afficherTransactions() {
       const transactions = getLocalStorage("transactions", []);
       const tableBody = document.getElementById("transactions-list");
@@ -263,7 +362,6 @@
      **************************************/
     function startContract() {
       const now = Date.now();
-      // Si un contrat est déjà en cours, on ne démarre pas un nouveau
       if (getLocalStorage("contractEnd", null) && now < getLocalStorage("contractEnd", 0)) {
         showNotification("Un contrat est déjà en cours.");
         return;
@@ -271,32 +369,26 @@
       const contractEnd = now + CONTRACT_DURATION;
       setLocalStorage("contractStart", now);
       setLocalStorage("contractEnd", contractEnd);
-      // Formatage des dates pour affichage dans la notification
       const startDateStr = new Date(now).toLocaleString();
       const endDateStr = new Date(contractEnd).toLocaleString();
       showNotification(`Le robot commence à travailler. Contrat du ${startDateStr} au ${endDateStr}.`);
       updateContractStatus();
-      // Planification de la fin du contrat
       setTimeout(finishContract, CONTRACT_DURATION);
     }
   
-    // À la fin du contrat, on transfère le balance (dépôt confirmé) + 5% en gains vers soldeGains
     function finishContract() {
       const balance = getLocalStorage("balance", 0);
       const gains = balance * 0.05;
       let soldeGains = getLocalStorage("soldeGains", 0);
       soldeGains += balance + gains;
       setLocalStorage("soldeGains", soldeGains);
-      // Réinitialisation du balance
       setLocalStorage("balance", 0);
-      // Suppression des données de contrat
       localStorage.removeItem("contractStart");
       localStorage.removeItem("contractEnd");
       updateUI();
       showNotification("Contrat terminé ! Vos gains ont été ajoutés.");
     }
   
-    // Lors du chargement de la page, si un contrat est en cours, le reprendre ou le terminer
     function checkOngoingContract() {
       const contractEnd = getLocalStorage("contractEnd", null);
       if (contractEnd) {
@@ -314,7 +406,6 @@
     /**************************************
      * GESTION DES ÉVÉNEMENTS UTILISATEUR
      **************************************/
-    // Démarrer le contrat (minage)
     document.getElementById("start-mining").addEventListener("click", function() {
       const balance = getLocalStorage("balance", 0);
       if (balance <= 0) {
@@ -324,12 +415,10 @@
       startContract();
     });
   
-    // Afficher le formulaire de dépôt
     document.getElementById("depot-btn").addEventListener("click", function() {
       document.getElementById("depot-form").style.display = "block";
     });
   
-    // Valider le dépôt (une seule fois par jour)
     document.getElementById("valider-depot").addEventListener("click", function() {
       const montantDepot = parseFloat(document.getElementById("montant-depot").value);
       const adresseDepot = document.getElementById("adresse-depot").value;
@@ -346,7 +435,6 @@
       const transactionId = addTransaction("Dépôt", montantDepot, adresseDepot);
       if (transactionId) {
         setLocalStorage("lastDeposit", today);
-        // Confirmation automatique après 2 minutes
         setTimeout(function() {
           confirmTransaction(transactionId);
         }, TRANSACTION_DELAY);
@@ -355,12 +443,10 @@
       }
     });
   
-    // Afficher le formulaire de retrait
     document.getElementById("retrait-btn").addEventListener("click", function() {
       document.getElementById("retrait-form").style.display = "block";
     });
   
-    // Valider le retrait (une seule fois par jour)
     document.getElementById("valider-retrait").addEventListener("click", function() {
       const montantRetrait = parseFloat(document.getElementById("montant-retrait").value);
       const adresseRetrait = document.getElementById("adresse-retrait").value;
@@ -386,7 +472,6 @@
       }
     });
   
-    // Afficher le tableau des transactions après saisie d'un code d'accès
     document.getElementById("show-transactions-btn").addEventListener("click", function() {
       const code = prompt("Veuillez entrer le code d'accès :");
       if (code === ACCESS_CODE) {
@@ -397,12 +482,24 @@
     });
   
     /**************************************
+     * NAVIGATION ENTRE LES SECTIONS
+     **************************************/
+    document.getElementById("show-mining").addEventListener("click", function() {
+      document.getElementById("mining-section").style.display = "block";
+      document.getElementById("transactions-section").style.display = "none";
+    });
+  
+    document.getElementById("show-transactions").addEventListener("click", function() {
+      document.getElementById("mining-section").style.display = "none";
+      document.getElementById("transactions-section").style.display = "block";
+    });
+  
+    /**************************************
      * INITIALISATION AU CHARGEMENT DE LA PAGE
      **************************************/
     updateUI();
     checkOngoingContract();
     processPendingTransactions();
-    // Vérification périodique des transactions en attente toutes les 60 secondes
     setInterval(processPendingTransactions, 60000);
   </script>
 </body>
