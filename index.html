@@ -207,9 +207,9 @@
         if (tx.type === "Retrait") {
           let soldeGains = getLocalStorage("soldeGains", 0);
           let fraisRetrait = tx.montant * 0.01; // 1% de frais
-          let montantFinal = tx.montant - fraisRetrait;
-          if (soldeGains >= montantFinal) {
-            soldeGains -= montantFinal;
+          // Désormais, on déduit directement le montant demandé du solde gains.
+          if (soldeGains >= tx.montant) {
+            soldeGains -= tx.montant;
             setLocalStorage("soldeGains", soldeGains);
             showNotification(`Retrait confirmé ! Frais appliqués : ${fraisRetrait} USDT.`);
           } else {
